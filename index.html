@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>study</title><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>圈x避坑指南</title><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
 
 html,body{background-color: #2d2d2d;}
 
@@ -825,7 +825,11 @@ div.code-toolbar > .toolbar > .toolbar-item > span:focus {
 <p><strong>1.问：重写规则显示文件不存在，如何解决？</strong></p>
 <p><img src="https://pic.ziyuan.wang/user/guest/2023/12/IMG_4030_73b6c3fcb14d5.jpeg" alt="IMG_4030.jpeg" /></p>
 <p>答：如上图所示，需要解决的问题是“该文件不存在”。出现该问题的原因是圈x对应的脚本目录下没有该对应名字的文件，将对应脚本保存到本地即可。</p>
-<p><strong>2.如何正确添加Mitm主机名？</strong></p>
+<p><strong>2.问：如何正确添加Mitm主机名？</strong></p>
 <p><img src="https://pic.ziyuan.wang/user/guest/2023/12/IMG_4034_425b25a6e198d.jpeg" alt="IMG_4034.jpeg" /></p>
 <p>答：如上图所示，<code>hostname=*.music.163.com</code>和<code>-*snssdk.co=*.music.163.com</code>均为错误格式，正确的格式只需要填写域名<code>host</code>，如<code>p.du.163.com</code>。</p>
+<p><strong>3.问：js脚本导入重写资源时，通过资源解析器解析失败，如何解决？</strong>.<br />
+<img src="https://pic.ziyuan.wang/user/guest/2023/12/IMG_4040_d33508b89cd04.jpeg" alt="IMG_4040.jpeg" /></p>
+<p>演示脚本地址：<a href="https://raw.githubusercontent.com/chavyleung/scripts/master/neteasemusic/neteasemusic.cookie.js">点击链接</a></p>
+<p>答：如上图所示，出现该问题的原因是“导入的链接为JS脚本，脚本内未有重写规则，无法解析使用”，即js脚本内没有对应的脚本配置注释。需要自己手动配置重写规则。</p>
 </div></body></html>
