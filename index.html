@@ -93,7 +93,7 @@
 
         .detail {
             margin: 0 auto;
-            display:block;
+            display: block;
             border-radius: 10px;
         }
 
@@ -139,25 +139,28 @@
                         <h3 class="text-center" @click="changeModule">{{ui.title}}</h3>
                         <nav aria-label="breadcrumb" class="text-white">
                             <ol class="breadcrumb" class="text-white">
-                                <li class="breadcrumb-item" >
+                                <li class="breadcrumb-item">
                                     <span v-show="ui.showStatus" class="text-white">home</span>
                                     <span v-show="!ui.showStatus" class="text-white" @click="back()"><-back</span>
-                                 / {{ui.title}}{{ui.account.name}}</li>
+                                    / {{ui.title}}{{ui.account.name}}
+                                </li>
                             </ol>
                         </nav>
                         <div v-show="ui.showStatus">
                             <button class="m-1" v-for="item of ui.module" @click="showDetail(item)">{{item.name}}</button>
                         </div>
                         <div class="detail" v-show="!ui.showStatus">
-                            <iframe class="detail text-center" height=225px :src="ui.account.url"> </iframe>
+                        <iframe ref="iframe" class="detail text-center" height="225px"></iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.x/dist/axios.min.js"></script>
+
     <script>
         new Vue({
             el: '#app',
@@ -252,10 +255,29 @@
                         this.ui.module=arr2;
                     }
                 },
-                showDetail(item){
+                async showDetail(item){
                     this.ui.showStatus=false;
                     this.ui.account.name=" / "+item.name;
                     this.ui.account.url=item.account.replace("shareapi","share");
+                    try {
+        const response = await axios.get(this.ui.account.url, {
+          headers: {
+            'Accept' : `text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8`,
+'Accept-Encoding' : `gzip, deflate, br`,
+'Connection' : `keep-alive`,
+'Referer' : `https://iios.songshuyouxi.com/`,
+'User-Agent' : `Mozilla/5.0 (iPhone; CPU iPhone OS 15_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604.1`,
+'Accept-Language' : `zh-CN,zh-Hans;q=0.9`
+          },
+          responseType: 'blob'
+        })
+
+        const blob = new Blob([response.data], { type: response.data.type })
+        const objectUrl = URL.createObjectURL(blob)
+        this.$refs.iframe.src = objectUrl
+      } catch (error) {
+        console.error('Failed to load iframe:', error)
+      }
                 }
             }
         })
